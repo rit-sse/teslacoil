@@ -12,18 +12,23 @@ class SoundWave():
         self.switchNotation = []
         self.converted = []
         self.amp = []
+
+def printAll(sound):
+    print(str(sound.timeStamp) + " : " + str(sound.unconverted) + " : " + str(sound.switchNotation) + " : " + str(sound.converted) + " : " + str(sound.amp))
+    
         
 def sqGen(freqs,sound,talkTime,noteTime):
     waveAdd = 0
     curFreq = len(freqs)
     curSwitch = 0
+    print(str(freqs) + " : " + str(curFreq) + " : " + str(sound) + " : " + str(talkTime) + " : " + str(noteTime))
     for i in range(int(talkTime * noteTime)):
         if waveAdd == 0:
             curFreq -= 1
             if curFreq == -1:
                 curFreq += len(freqs)
             waveAdd = int(talkTime / freqs[curFreq])
-            if curSwitch == 0:
+            if curSwitch == 0: #Every other time it does this
                 curSwitch = 1
             else:
                 curSwitch = 0
@@ -82,6 +87,7 @@ testSound = SoundWave()
 sounds = [220]
 testSound = sqGen(sounds, testSound, 44100, 1)
 ########################################################################################
+#printAll(testSound)
 x = wave.open("songfile.wav","w")
 x.setparams([1, 1, 44100, 0, 'NONE', 'NONE'])
 toFile = []
@@ -92,3 +98,4 @@ x.close()
 p = open("songfile.csv","w")
 for i in range(min(len(testSound.timeStamp),1000)):
     p.write(str(testSound.timeStamp[i]) + "," + str(testSound.unconverted[i]) + "," + str(testSound.converted[i]) + "\n")
+p.close()
