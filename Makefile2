@@ -1,0 +1,6 @@
+TeslaCoil: SoundWave.o WaveFileReader.o
+	g++ -o SoundWave.o WaveFileReader.o
+SoundWave.o: SoundWave.h SoundWave.cpp
+	g++ -c SoundWave.cpp
+WaveFileReader.o: sndfile.h WaveFileReader.h SoundWave.h WaveFileReader.cpp
+	g++ -c WaveFileReader.cpp
