@@ -17,6 +17,7 @@
 
 #include	<cstdio>
 #include	<cstring>
+#include	<cmath>
 
 #include	<sndfile.hh>
 
@@ -35,8 +36,11 @@ create_file (const char * fname, int format)
 	file = SndfileHandle (fname, SFM_WRITE, format, channels, srate) ;
 
 	memset (buffer, 0, sizeof (buffer)) ;
-
-	file.write (buffer, BUFFER_LEN) ;
+	const int size = srate*3;
+	float sample[size];
+	float current =0;
+	for(int i =0; i<size;i++) sample[i] = sin(float(i)/size*M_PI*1500);
+	file.write (&sample[0], size) ;
 
 	puts ("") ;
 	/*
